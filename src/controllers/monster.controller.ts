@@ -70,11 +70,22 @@ export const getAll = async (req: Request, res: Response): Promise<Response> => 
   return res.status(StatusCodes.OK).json(monsters);
 };
 
+export const search = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const name: string = req.params.name;
+  const monsters = await Monster.query().where('name', 'like', `%${name}%`);
+  return res.status(StatusCodes.OK).json(monsters);
+};
+
+
 export const MonsterController = {
   get,
   create,
   update,
   remove,
   importCsv,
-  getAll
+  getAll,
+  search,
 };

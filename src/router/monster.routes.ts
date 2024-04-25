@@ -11,5 +11,6 @@ router.get('/:id', MonsterController.get);
 router.put('/:id', MonsterController.update);
 router.delete('/:id', MonsterController.remove);
 router.get('/', MonsterController.getAll);
+router.get('/search/:name', MonsterController.search);
 
 export default router;
