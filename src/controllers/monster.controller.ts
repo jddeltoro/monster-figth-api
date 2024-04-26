@@ -79,6 +79,19 @@ export const search = async (
   return res.status(StatusCodes.OK).json(monsters);
 };
 
+export const clone = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id: Id = req.params.id;
+  const monster = await Monster.query().findById(id);
+  if (!monster) {
+    return res.sendStatus(StatusCodes.NOT_FOUND);
+  }
+  const clone = await Monster.query().insertAndFetch({ ...monster, name: `${monster.name} (clone)` });
+  return res.status(StatusCodes.CREATED).json(clone);
+}
+
 
 export const MonsterController = {
   get,
@@ -88,4 +101,5 @@ export const MonsterController = {
   importCsv,
   getAll,
   search,
+  clone,
 };

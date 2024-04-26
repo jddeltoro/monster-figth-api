@@ -12,5 +12,6 @@ router.put('/:id', MonsterController.update);
 router.delete('/:id', MonsterController.remove);
 router.get('/', MonsterController.getAll);
 router.get('/search/:name', MonsterController.search);
+router.post('/clone/:id', MonsterController.clone);
 
 export default router;
