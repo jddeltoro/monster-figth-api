@@ -92,6 +92,19 @@ export const clone = async (
   return res.status(StatusCodes.CREATED).json(clone);
 }
 
+export const special_ability = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id: Id = req.params.id;
+  const monster = await Monster.query().findById(id);
+  if (!monster) {
+    return res.sendStatus(StatusCodes.NOT_FOUND);
+  } 
+  const specialAbility = await monster.$relatedQuery('special_abilities');
+  return res.status(StatusCodes.OK).json(specialAbility);
+}
+
 
 export const MonsterController = {
   get,
@@ -102,4 +115,5 @@ export const MonsterController = {
   getAll,
   search,
   clone,
+  special_ability,
 };
