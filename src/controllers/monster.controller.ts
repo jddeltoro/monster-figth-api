@@ -105,6 +105,21 @@ export const special_ability = async (
   return res.status(StatusCodes.OK).json(specialAbility);
 }
 
+export const add_talent = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id: Id = req.params.id;
+  const monster = await Monster.query().findById(id);
+  if (!monster) {
+    return res.sendStatus(StatusCodes.NOT_FOUND);
+  }
+
+  const talent = req.body;
+  const newTalent = await monster.$relatedQuery('talents').insert(talent);
+  return res.status(StatusCodes.CREATED).json(newTalent);
+}
+
 
 export const MonsterController = {
   get,
@@ -116,4 +131,5 @@ export const MonsterController = {
   search,
   clone,
   special_ability,
+  add_talent
 };
