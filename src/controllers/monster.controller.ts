@@ -120,6 +120,21 @@ export const add_talent = async (
   return res.status(StatusCodes.CREATED).json(newTalent);
 }
 
+export const  add_item = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const id: Id = req.params.id;
+  const monster = await Monster.query().findById(id);
+  if
+  (!monster) {
+    return res.sendStatus(StatusCodes.NOT_FOUND);
+  }
+  const item = req.body;
+  const newItem = await monster.$relatedQuery('items').insert(item);
+  return res.status(StatusCodes.CREATED).json(newItem);
+}
+
 
 export const MonsterController = {
   get,
